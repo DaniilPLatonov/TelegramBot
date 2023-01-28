@@ -8,4 +8,5 @@ The essence of the bot's work is that the user enters the word **\start** into t
 ## Block diagram of operation
 _______
 
-![]()
+![](https://github.com/DaniilPLatonov/TelegramBot/blob/master/Block%20diagram%20of%20operation.png?raw=true)
+
