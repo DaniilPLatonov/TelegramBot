@@ -34,11 +34,9 @@ public class ConfigBot extends TelegramLongPollingBot {
                 if (update.getMessage().getText().equals("/start")) {
                     try {
                         Parser parser = new Parser();
-                        parser.parseUrl();
+                        Parser.parseUrl();
                         execute(sendInlineKeyBoardMessage(update.getMessage().getChatId(), parser));
-                    } catch (TelegramApiException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
+                    } catch (TelegramApiException | IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -57,71 +55,22 @@ public class ConfigBot extends TelegramLongPollingBot {
 
     public static SendMessage sendInlineKeyBoardMessage(long chatId, Parser parser) throws IOException {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow4 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow5 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow6 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow7 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow8 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow9 = new ArrayList<>();
-        List<InlineKeyboardButton> keyboardButtonsRow10 = new ArrayList<>();
-        for (int i = 1; i<3; i++) {
 
-            keyboardButtonsRow2.add(new InlineKeyboardButton().builder()
-                    .text(parser.Foods.get(i).getProduct())
-                    .callbackData("В продукте " + parser.getCal(parser.Foods.get(i).getProduct()) + " калорий")
-                    .build());
-        }
-        for (int i = 3; i< 5; i++)
-        {
-            keyboardButtonsRow3.add(new InlineKeyboardButton().builder()
-                    .text(parser.Foods.get(i).getProduct())
-                    .callbackData("В продукте " +parser.getCal(parser.Foods.get(i).getProduct())+" калорий").build());
-        }
-        for (int i = 5; i<7; i++) {
-            keyboardButtonsRow4.add(new InlineKeyboardButton().builder()
-                    .text(parser.Foods.get(i).getProduct())
-                    .callbackData("В продукте " +parser.getCal(parser.Foods.get(i).getProduct())+" калорий").build());
-        }
-        for (int i = 7; i< 9; i++) {
-            keyboardButtonsRow5.add(new InlineKeyboardButton().builder()
-                    .text(parser.Foods.get(i).getProduct())
-                    .callbackData("В продукте " +parser.getCal(parser.Foods.get(i).getProduct())+" калорий").build());
-        }
-
-        for (int i = 9; i<11; i++) {
-            keyboardButtonsRow6.add(new InlineKeyboardButton().builder()
-                    .text(parser.Foods.get(i).getProduct())
-                    .callbackData("В продукте " +parser.getCal(parser.Foods.get(i).getProduct())+" калорий").build());
-        }
-        for (int i = 11; i< 13; i++) {
-            keyboardButtonsRow7.add(new InlineKeyboardButton().builder()
-                    .text(parser.Foods.get(i).getProduct())
-                    .callbackData("В продукте " +parser.getCal(parser.Foods.get(i).getProduct())+" калорий").build());
-        }
-        for (int i = 13; i<15; i++) {
-            keyboardButtonsRow8.add(new InlineKeyboardButton().builder()
-                    .text(parser.Foods.get(i).getProduct())
-                    .callbackData("В продукте " +parser.getCal(parser.Foods.get(i).getProduct())+" калорий").build());
-        }
-        for (int i = 15; i< 17; i++) {
-            keyboardButtonsRow9.add(new InlineKeyboardButton().builder()
-                    .text(parser.Foods.get(i).getProduct())
-                    .callbackData("В продукте " +parser.getCal(parser.Foods.get(i).getProduct())+" калорий").build());
-        }
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-        rowList.add(keyboardButtonsRow1);
-        rowList.add(keyboardButtonsRow2);
-        rowList.add(keyboardButtonsRow3);
-        rowList.add(keyboardButtonsRow4);
-        rowList.add(keyboardButtonsRow5);
-        rowList.add(keyboardButtonsRow6);
-        rowList.add(keyboardButtonsRow7);
-        rowList.add(keyboardButtonsRow8);
-        rowList.add(keyboardButtonsRow9);
+
+        for (int j = 1; j < 40; j += 2) {
+            List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
+            for (int i = j; i < j + 2; i++) {
+                keyboardButtonsRow2.add(new InlineKeyboardButton().builder()
+                        .text(Parser.Foods.get(i).getProduct())
+                        .callbackData("В продукте " + Parser.getCal(Parser.Foods.get(i).getProduct()) + " калорий")
+                        .build());
+            }
+            rowList.add(keyboardButtonsRow2);
+        }
+
+
         inlineKeyboardMarkup.setKeyboard(rowList);
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));
